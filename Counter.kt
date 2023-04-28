@@ -1,44 +1,50 @@
 package sorting
 
-import java.lang.ClassCastException
 import kotlin.math.roundToInt
 
 class Counter(private val dataList: DataList) {
 
     internal fun showMax() {
-
+        val maxValue = countMaxValue()
         val text =
             when(dataList.type) {
                 "long" -> "greatest number"
                 "line" -> "longest line"
                 else -> "longest word"
             }
-        println("The $text: ")
-
-        /*val maxVal = counter.countMaxValue()
-    println("The greatest number: ${maxVal["max"]} (${maxVal["countMax"]} time(s)).")*/
+        println("The $text: ${maxValue["max"]} (${maxValue["countMax"]} time(s), ${maxValue["percentage"]}%).")
     }
 
     private fun countMaxValue(): Map<String, Any> {
-        var max = Integer.MIN_VALUE
+        var max = 0L
+        var maxLine = ""
         var count = 0
-        var valueInt: Int
-        for (i in dataList.list) {
-            val j = i.toString()
-            try {
-                valueInt = j.toInt()
-            } catch (e: ClassCastException) {
-                continue
-            }
-            when {
-                valueInt > max -> {
-                    max = valueInt
-                    count = 1
+        if (dataList.type == "long") {
+            max = dataList.list[0].toString().toLong()
+            for (i in 1..dataList.list.lastIndex) {
+                val j = dataList.list[i].toString().toLong()
+                when {
+                    j > max -> {
+                        max = j
+                        count = 1
+                    }
+                    j == max -> count++
                 }
-                valueInt == max -> count++
+            }
+        } else {
+            for (i in dataList.list) {
+                val j = i.toString()
+                when {
+                    j.length > maxLine.length -> {
+                        maxLine = j
+                        count = 1
+                    }
+                    j.length == maxLine.length -> count++
+                }
             }
         }
-        return mutableMapOf("max" to max, "countMax" to count, "percentage" to countPercentage(count))
+        val maxVal = if (dataList.type == "long") max else maxLine
+        return mutableMapOf("max" to maxVal, "countMax" to count, "percentage" to countPercentage(count))
     }
 
     private fun countPercentage(countMax: Int) = (100.0 / dataList.list.size * countMax).roundToInt()
