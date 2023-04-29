@@ -12,12 +12,14 @@ class Counter(private val dataList: DataList) {
                 "line" -> "longest line"
                 else -> "longest word"
             }
-        println("The $text: ${maxValue["max"]} (${maxValue["countMax"]} time(s), ${maxValue["percentage"]}%).")
+        val space = if (dataList.type == "line") "" else " "
+        println("The $text: ${maxValue["max"]}$space(${maxValue["countMax"]} time(s), ${maxValue["percentage"]}%).")
     }
 
     private fun countMaxValue(): Map<String, Any> {
         var max = 0L
         var maxLine = ""
+        val listMax = mutableSetOf<String>()
         var count = 0
         if (dataList.type == "long") {
             max = dataList.list[0].toString().toLong()
@@ -38,12 +40,22 @@ class Counter(private val dataList: DataList) {
                     j.length > maxLine.length -> {
                         maxLine = j
                         count = 1
+                        listMax.clear()
+                        listMax.add(j)
                     }
-                    j.length == maxLine.length -> count++
+                    j.length == maxLine.length -> {
+                        count++
+                        listMax.add(j)
+                    }
                 }
             }
         }
-        val maxVal = if (dataList.type == "long") max else maxLine
+        val maxVal =
+            when (dataList.type) {
+                "long" -> max
+                "word" -> listMax.sorted().joinToString()
+                else -> "\n${listMax.sorted().joinToString("\n")}\n"
+            }
         return mutableMapOf("max" to maxVal, "countMax" to count, "percentage" to countPercentage(count))
     }
 

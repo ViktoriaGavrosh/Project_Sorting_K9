@@ -3,7 +3,7 @@ package sorting
 fun main(args: Array<String>) {
     val dataList =
     try {
-        DataList(args[3])
+        DataList(args[1])
     } catch (e: Exception) {
         DataList("word")
     }
