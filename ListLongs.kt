@@ -28,4 +28,8 @@ class ListLongs(type: String) : DataList(type), MaxCounter{
         val maxValue = countMaxValue()
         println("The greatest number: ${maxValue["max"]} (${maxValue["countMax"]} time(s), ${maxValue["percentage"]}%).")
     }
+
+    internal fun sortValue(): List<Long> {
+        return list.map { it.toString().toLong() }.sorted()
+    }
 }
