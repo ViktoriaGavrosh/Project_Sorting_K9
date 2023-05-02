@@ -6,7 +6,7 @@ fun main(args: Array<String>) {
             when {
                 args.indexOf("line") != -1 -> ListLines("line")
                 args.indexOf("word") != -1 -> ListWords("word")
-                else -> ListLongs("line")
+                else -> ListLongs("long")
             }
         } catch (e: Exception) {
             ListWords("word")
@@ -16,12 +16,3 @@ fun main(args: Array<String>) {
         dataList.showSortByCount()
     } else dataList.showSortNatural()
 }
-
-/*
-if (args.indexOf("-sortIntegers") != -1) {
-    val list = ListLongs("long")
-    list.showTotalElements()
-
-} else {
-*/
-

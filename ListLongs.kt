@@ -1,6 +1,7 @@
 package sorting
 
 import java.util.*
+import kotlin.math.roundToInt
 
 class ListLongs(type: String) : DataList(type), MaxCounter, SorterList {
     override fun fillList(): MutableList<Any> {
@@ -30,7 +31,21 @@ class ListLongs(type: String) : DataList(type), MaxCounter, SorterList {
     }
 
     override fun sortValue(): List<String> {
-        list.map { it.toString().toLong() }.sorted()
-        return list.map { it.toString() }
+        val sortList = list.map { it.toString().toLong() }.sorted()
+        return sortList.map { it.toString() }
+    }
+
+    override fun fillSortMap(): MutableMap<String, Int> {
+        val mapElements = mutableMapOf<Long, Int>()
+        for (i in list) {
+            val j = i.toString().toLong()
+            if (j in mapElements.keys) {
+                mapElements[j] = (mapElements[j] ?: 0) + 1
+            } else mapElements[j] = 1
+        }
+        val sortMap = mapElements.toSortedMap()
+        val mapString = mutableMapOf<String, Int>()
+        for ((k, v) in sortMap) mapString[k.toString()] = v
+        return mapString
     }
 }
