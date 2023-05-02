@@ -2,7 +2,7 @@ package sorting
 
 import java.util.*
 
-class ListLongs(type: String) : DataList(type), MaxCounter{
+class ListLongs(type: String) : DataList(type), MaxCounter, SorterList {
     override fun fillList(): MutableList<Any> {
         val scan = Scanner(System.`in`)
         val list = mutableListOf<Any>()
@@ -29,7 +29,8 @@ class ListLongs(type: String) : DataList(type), MaxCounter{
         println("The greatest number: ${maxValue["max"]} (${maxValue["countMax"]} time(s), ${maxValue["percentage"]}%).")
     }
 
-    internal fun sortValue(): List<Long> {
-        return list.map { it.toString().toLong() }.sorted()
+    override fun sortValue(): List<String> {
+        list.map { it.toString().toLong() }.sorted()
+        return list.map { it.toString() }
     }
 }

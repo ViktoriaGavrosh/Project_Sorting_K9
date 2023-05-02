@@ -1,27 +1,27 @@
 package sorting
 
 fun main(args: Array<String>) {
-    if (args.indexOf("-sortIntegers") != -1) {
-        val list = ListLongs("long")
-        list.showTotalElements()
-        println("Sorted data: ${list.sortValue().joinToString(" ")}")
-    } else {
-        val dataList =
-            try {
-                when (args[1]) {
-                    "line" -> ListLines(args[1])
-                    "word" -> ListWords(args[1])
-                    else -> ListLongs(args[1])
-                }
-            } catch (e: Exception) {
-                ListWords("word")
+    val dataList =
+        try {
+            when {
+                args.indexOf("line") != -1 -> ListLines("line")
+                args.indexOf("word") != -1 -> ListWords("word")
+                else -> ListLongs("line")
             }
-        dataList.showTotalElements()
-        dataList.showMax()
-    }
+        } catch (e: Exception) {
+            ListWords("word")
+        }
+    dataList.showTotalElements()
+    if (args.indexOf("-sortingType") != -1 && args.indexOf("byCount") != -1) {
+        dataList.showSortByCount()
+    } else dataList.showSortNatural()
 }
 
+/*
+if (args.indexOf("-sortIntegers") != -1) {
+    val list = ListLongs("long")
+    list.showTotalElements()
 
-
-
+} else {
+*/
 

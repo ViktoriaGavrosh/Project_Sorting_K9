@@ -2,7 +2,7 @@ package sorting
 
 import java.util.*
 
-class ListLines(type: String) : DataList(type), MaxCounter {
+class ListLines(type: String) : DataList(type), MaxCounter, SorterList {
     override fun fillList(): MutableList<Any> {
         val scan = Scanner(System.`in`)
         val list = mutableListOf<Any>()
@@ -34,5 +34,9 @@ class ListLines(type: String) : DataList(type), MaxCounter {
     override fun showMax() {
         val maxValue = countMaxValue()
         println("The longest line: ${maxValue["max"]}(${maxValue["countMax"]} time(s), ${maxValue["percentage"]}%).")
+    }
+
+    override fun showSortNatural() {
+        println("Sorted data:\n${sortValue().joinToString("\n")}")
     }
 }

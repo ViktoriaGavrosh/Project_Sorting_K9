@@ -2,7 +2,7 @@ package sorting
 
 import java.util.*
 
-class ListWords(type: String) : DataList(type), MaxCounter{
+class ListWords(type: String) : DataList(type), MaxCounter, SorterList {
 
     override fun fillList(): MutableList<Any> {
         val scan = Scanner(System.`in`)
@@ -36,5 +36,4 @@ class ListWords(type: String) : DataList(type), MaxCounter{
         val maxValue = countMaxValue()
         println("The longest word: ${maxValue["max"]} (${maxValue["countMax"]} time(s), ${maxValue["percentage"]}%).")
     }
-
 }
