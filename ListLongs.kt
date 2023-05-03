@@ -6,14 +6,23 @@ class ListLongs(type: String) : DataList(type), MaxCounter, SorterList {
     override fun fillList(): MutableList<Any> {
         val scan = Scanner(System.`in`)
         val list = mutableListOf<Any>()
-        while (scan.hasNextLong()) list.add(scan.nextLong())
+        val listTexts = mutableListOf<String>()
+        while (scan.hasNext()) {
+            val i = scan.next()
+            try {
+                list.add(i.toLong())
+            } catch (e: Exception) {
+                listTexts.add("\"$i\" is not a long. It will be skipped.")
+            }
+        }
+        println(listTexts.joinToString("\n"))
         return list
     }
 
-    override fun countMaxValue(): Map<String, Any> {
-        var max = list[0].toString().toLong()
+    override fun countMaxValue(): Map<String, Any> {    // don`t use
+        var max = Long.MIN_VALUE
         var count = 0
-        for (i in 1..list.lastIndex) {
+        for (i in list.indices) {
             val j = list[i].toString().toLong()
             if (j == max) count++
             if (j > max) {
@@ -24,7 +33,7 @@ class ListLongs(type: String) : DataList(type), MaxCounter, SorterList {
         return mutableMapOf("max" to max, "countMax" to count, "percentage" to countPercentage(count, list.size))
     }
 
-    override fun showMax() {
+    override fun showMax() {     // don`t use
         val maxValue = countMaxValue()
         println("The greatest number: ${maxValue["max"]} (${maxValue["countMax"]} time(s), ${maxValue["percentage"]}%).")
     }
