@@ -4,7 +4,7 @@ import java.util.*
 
 class ListLongs(type: String, inputFileName: String, outputFileName: String) : DataList(type, inputFileName, outputFileName), SorterList {
     override fun fillList(): MutableList<Any> {
-        val scan = if (inputFile != null) Scanner(inputFile) else Scanner(System.`in`)
+        val scan = if (inputFile != null) Scanner(inputFile!!) else Scanner(System.`in`)
         val list = mutableListOf<Any>()
         val listTexts = mutableListOf<String>()
         while (scan.hasNext()) {
