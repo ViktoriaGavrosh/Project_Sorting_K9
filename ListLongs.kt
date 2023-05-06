@@ -2,9 +2,9 @@ package sorting
 
 import java.util.*
 
-class ListLongs(type: String) : DataList(type), MaxCounter, SorterList {
+class ListLongs(type: String, inputFileName: String, outputFileName: String) : DataList(type, inputFileName, outputFileName), MaxCounter, SorterList {
     override fun fillList(): MutableList<Any> {
-        val scan = Scanner(System.`in`)
+        val scan = if (inputFile != null) Scanner(inputFile) else Scanner(System.`in`)
         val list = mutableListOf<Any>()
         val listTexts = mutableListOf<String>()
         while (scan.hasNext()) {

@@ -6,6 +6,8 @@ class Sorting(args: Array<String>) {
     private var isException = false
     private val listDataType = listOf("line", "long", "word")
     private val listSortingType = listOf("natural", "byCount")
+    private var inputFileName = ""
+    private var outputFileName = ""
     init {
         for (i in args.indices) {
             when (args[i]) {
@@ -29,6 +31,8 @@ class Sorting(args: Array<String>) {
                 }
                 in listDataType -> continue
                 in listSortingType -> continue
+                "-inputFile" -> inputFileName = args[i + 1]
+                "-outputFile" -> outputFileName = args[i + 1]
                 else -> println("\"${args[i]}\" is not a valid parameter. It will be skipped.")
             }
         }
@@ -43,9 +47,9 @@ class Sorting(args: Array<String>) {
         val sorting = sortingType ?: "natural"
         val dataList =
             when (data){
-                "line" -> ListLines("line")
-                "word" -> ListWords("word")
-                else -> ListLongs("long")
+                "line" -> ListLines("line", inputFileName, outputFileName)
+                "word" -> ListWords("word", inputFileName, outputFileName)
+                else -> ListLongs("long", inputFileName, outputFileName)
             }
         dataList.showTotalElements()
         if (sorting == "byCount") dataList.showSortByCount() else dataList.showSortNatural()

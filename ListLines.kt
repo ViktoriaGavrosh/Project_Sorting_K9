@@ -2,9 +2,9 @@ package sorting
 
 import java.util.*
 
-class ListLines(type: String) : DataList(type), MaxCounter, SorterList {
+class ListLines(type: String, inputFileName: String, outputFileName: String) : DataList(type, inputFileName, outputFileName), MaxCounter, SorterList {
     override fun fillList(): MutableList<Any> {
-        val scan = Scanner(System.`in`)
+        val scan = if (inputFile != null) Scanner(inputFile) else Scanner(System.`in`)
         val list = mutableListOf<Any>()
         while (scan.hasNextLine()) list.add(scan.nextLine())
         return list
@@ -37,6 +37,7 @@ class ListLines(type: String) : DataList(type), MaxCounter, SorterList {
     }
 
     override fun showSortNatural() {
-        println("Sorted data:\n${sortValue().joinToString("\n")}")
+        val text = "Sorted data:\n${sortValue().joinToString("\n")}"
+        if (outputFile != null) outputFile?.appendText("$text\n") else println(text)
     }
 }
